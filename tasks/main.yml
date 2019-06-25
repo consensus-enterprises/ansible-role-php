@@ -61,7 +61,7 @@
 
 # Install PHP from source when php_install_from_source is true.
 - include_tasks: install-from-source.yml
-  when: php_install_from_source
+  when: php_install_from_source | bool
 
 # Configure PHP.
 - include_tasks: configure.yml
