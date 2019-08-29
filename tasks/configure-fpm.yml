@@ -31,6 +31,7 @@
     owner: root
     group: root
     mode: 0755
+  become: yes
   when: php_fpm_pool_conf_path_dir_stat.stat.islnk is not defined
 
 - name: Ensure the default pool exists.
@@ -41,6 +42,7 @@
     group: root
     mode: 0644
     force: false
+  become: yes
   when: php_enable_php_fpm | bool
 
 - name: Configure php-fpm pool (if enabled).
@@ -49,6 +51,7 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
+  become: yes
   with_items:
     - regexp: "^user.?=.+$"
       line: "user = {{ php_fpm_pool_user }}"
@@ -83,4 +86,5 @@
     state: started
     enabled: true
     use: service
+  become: yes
   when: php_enable_php_fpm and ansible_distribution == "Debian"
